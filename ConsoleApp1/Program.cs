@@ -3,20 +3,12 @@
 enum Color { White, Black }
 enum Type { Rook, Pawn }
 
-class Figure
+class Figure(Type type, Color color, int x, int y)
 {
-    public Type Type { get; }
-    public Color Color { get; }
-    public int X { get; }
-    public int Y { get; }
-
-    public Figure(Type type, Color color, int x, int y)
-    {
-        Type = type;
-        Color = color;
-        X = x;
-        Y = y;
-    }
+    public Type Type { get; } = type;
+    public Color Color { get; } = color;
+    public int X { get; } = x;
+    public int Y { get; } = y;
 
     public bool CanAttack(Figure other, Figure[] all)
     {
