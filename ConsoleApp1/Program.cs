@@ -102,7 +102,14 @@ class Program
         do
         {
             Console.Write($"{color} {type} (X Y): ");
-            string[] input = Console.ReadLine().Split();
+            string? line = Console.ReadLine();
+            if (line == null)
+            {
+                Console.WriteLine("Input cannot be null. Please enter two numbers separated by space.");
+                isOccupied = true;
+                continue;
+            }
+            string[] input = line.Split();
             if (input.Length != 2 || !int.TryParse(input[0], out x) || !int.TryParse(input[1], out y))
             {
                 Console.WriteLine("Invalid format. Enter two numbers separated by space.");
