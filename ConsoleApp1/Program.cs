@@ -48,22 +48,6 @@ class Figure(Type type, Color color, int x, int y)
         return false;
     }
 
-    public bool CanDefend(Figure other)
-    {
-        if (Color != other.Color) return false;
-
-        if (Type == Type.Rook)
-            return (X == other.X || Y == other.Y);
-
-        if (Type == Type.Pawn)
-        {
-            int dir = (Color == Color.White) ? 1 : -1;
-            return (other.X == X - 1 || other.X == X + 1) && other.Y == Y + dir;
-        }
-
-        return false;
-    }
-
     public override string ToString() =>
         $"{Color} {Type} ({X},{Y})";
 }
@@ -144,8 +128,19 @@ class Program
             if (fig.CanAttack(other, all))
                 attacks += other + " ";
 
-            if (fig.CanDefend(other))
-                defenses += other + " ";
+            if (fig.Color == other.Color)
+            {
+                foreach (var enemy in all)
+                {
+                    if (enemy == fig || enemy.Color == fig.Color) continue;
+
+                    if (enemy.CanAttack(other, all))
+                    {
+                        defenses += other + " ";
+                        break;
+                    }
+                }
+            }
         }
 
         Console.WriteLine(fig);
